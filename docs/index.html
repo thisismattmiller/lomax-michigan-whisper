@@ -559,8 +559,11 @@
 
 
             }
-            this.totalRecords=resultsData.length
-            this.chunkResults(resultsData)
+            // this.totalRecords=resultsData.length
+            window.setTimeout(()=>{
+              this.chunkResults(resultsData)  
+            },1000)
+            
 
 
 
@@ -577,7 +580,7 @@
 
           setUrlState(){
             return false
-            
+
             if (this.popStateAction){
               return false
             }
