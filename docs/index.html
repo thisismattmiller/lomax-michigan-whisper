@@ -215,6 +215,7 @@
 
               <div class="item-container" v-for="i in renderIds[activePage]">
 
+                <template v-if="resources[i.id]"> 
                 <div><h3 class="is-size-4 mb-2">{{resources[i.id].title}}</h3></div>
 
                 <div class="item">
@@ -268,6 +269,8 @@
                     
                   </div>
                 </div>
+
+                </template>
 
               </div>
 
@@ -633,7 +636,6 @@
           //   }
 
           // }
-       
 
           this.filters = await this.pagefind.filters();
 
@@ -688,6 +690,17 @@
           this.buildPages()
 
 
+          let test = await this.pagefind.search(null);
+          console.log("testtesttesttesttest",test)
+
+          const chunkSize = 5;
+          for (let i = 0; i < test.results.length; i += chunkSize) {
+              const chunk = test.results.slice(i, i + chunkSize);
+              
+
+              await Promise.all(chunk.map(r => r.data()));
+
+          }
 
 
 
