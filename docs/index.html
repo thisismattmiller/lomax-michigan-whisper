@@ -473,12 +473,12 @@
                 const chunk = results.slice(i, i + chunkSize);
                 chunkedResults.push(chunk)
             }
-            console.log('chunkedResults',chunkedResults)
+
 
             this.renderIds = JSON.parse(JSON.stringify(chunkedResults))
             this.buildPages()
 
-            console.log('this.renderIds',this.renderIds)
+
 
 
 
@@ -556,17 +556,15 @@
             for (let result of this.search.results){
               let d = await result.data()
               console.log(d)
-              d.id = d.url.split("/")[1].split(".html")[0]
+              d.id = d.url.replace("/lomax-michigan-whisper",'').split("/")[1].split(".html")[0]
               resultsData.push(d);
 
 
-
-
             }
-            // this.totalRecords=resultsData.length
-            window.setTimeout(()=>{
+              this.totalRecords=resultsData.length
+
               this.chunkResults(resultsData)  
-            },1000)
+
             
 
 
@@ -583,7 +581,7 @@
 
 
           setUrlState(){
-            return false
+
 
             if (this.popStateAction){
               return false
@@ -640,16 +638,7 @@
 
 
           this.pagefind = await import("./pagefind/pagefind.js");
-          // try{
-          //   this.pagefind = await import("./pagefind/pagefind.js");
-          // }catch{
-          //   try{
-          //     this.pagefind = await import("pagefind/pagefind.js");
-          //   }catch{
-          //     this.pagefind = await import("/pagefind/pagefind.js");
-          //   }
 
-          // }
 
           this.filters = await this.pagefind.filters();
 
