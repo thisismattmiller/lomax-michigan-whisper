@@ -621,16 +621,18 @@
             this.pickRandom()
           });
 
-          try{
-            this.pagefind = await import("/lomax-michigan-whisper/pagefind/pagefind.js");
-          }catch{
-            try{
-              this.pagefind = await import("pagefind/pagefind.js");
-            }catch{
-              this.pagefind = await import("/pagefind/pagefind.js");
-            }
 
-          }
+          this.pagefind = await import("./pagefind/pagefind.js");
+          // try{
+          //   this.pagefind = await import("./pagefind/pagefind.js");
+          // }catch{
+          //   try{
+          //     this.pagefind = await import("pagefind/pagefind.js");
+          //   }catch{
+          //     this.pagefind = await import("/pagefind/pagefind.js");
+          //   }
+
+          // }
        
 
           this.filters = await this.pagefind.filters();
