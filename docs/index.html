@@ -189,6 +189,22 @@
 
             />
 
+            <template v-if="welcomeMsg">
+              
+              
+              <article class="message is-info">
+  <div class="message-header" style="margin-top:2em">
+      Welcome
+      </div>
+      <div class="message-body">
+        <p>On this page you can search and filter over 400 songs from the <a href="https://www.loc.gov/collections/alan-lomax-in-michigan/">Alan Lomax in Michigan collection</a> from the Library of Congress. This data was generated via machine learning processes, read more at this blog post.</p>
+        <p style="margin-top:1em;">Below are a few random selections, but use the search bar above and the filters on the left to browse around. Each song is displayed as a player interface with their lyrics separated on each line. You can click a line to play just that section of the song. You can also click the play button at the top to play continuously from where you clicked last.</p>
+
+      </div>
+    </article>
+
+            </template>
+
 
 
             <template v-if="totalRecords>0">Total Records: {{totalRecords}}</template>
@@ -312,7 +328,7 @@
       createApp({
         data() {
           return {
-            message: 'Hello Vue!',
+
             resources: {},
 
             renderIds:[],
@@ -335,6 +351,8 @@
             pagefind: null,
             filters: null,
             search: null,
+
+            welcomeMsg: true,
 
           }
         },
@@ -384,6 +402,7 @@
 
           buildPages(){
 
+
             // this.activePage = 0
 
             if (this.renderIds.length>0){
@@ -427,7 +446,7 @@
               }
             }
 
-            console.log(engIds)
+
             const shuffled = engIds.sort(() => 0.5 - Math.random());
   
             let oneSet = []
@@ -499,6 +518,7 @@
 
           async facet(f){
 
+            this.welcomeMsg=false
 
             if (f){
               let type = Object.keys(f).filter((x)=> {return (x!=='count')})[0]
@@ -596,13 +616,23 @@
           fetch('data.json')
           .then((response)=> { return response.json(); })
           .then((json)=> {
-            console.log(json)
+
             this.resources = json
             this.pickRandom()
           });
 
+          try{
+            this.pagefind = await import("/lomax-michigan-whisper/pagefind/pagefind.js");
+          }catch{
+            try{
+              this.pagefind = await import("pagefind/pagefind.js");
+            }catch{
+              this.pagefind = await import("/pagefind/pagefind.js");
+            }
 
-          this.pagefind = await import("/pagefind/pagefind.js");
+          }
+       
+
           this.filters = await this.pagefind.filters();
 
           this.resetFacets()
