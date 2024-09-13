@@ -1,5 +1,8 @@
 # lomax-michigan-whisper
-lomax-michigan
+
+
+Check out this blog post to learn more: https://thisismattmiller.com/post/lomax-whisper/
+
 
 
 ### Get Whisper.cpp ready
